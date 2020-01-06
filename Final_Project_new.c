@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX_LEN 10
 
 int main(void){
   /* Declare all variables */
@@ -9,6 +8,7 @@ int main(void){
   char *filename2 = "./output2.txt";
   char readbuf[80];
   int Char1, Char2;
+  int bool = 0;
 
   /* Create one way pipeline in with popen() that reads in the input file */
   if ((pipe_read = popen("cat supermarket_sales.csv", "r")) == NULL){
@@ -56,17 +56,24 @@ int main(void){
   /* For each character check if they are equal, if they aren't equal print error message and break out of the loop */
   Char1 = fgetc(test_file1); /* get a character from the file */
   Char2 = fgetc(test_file2);
-  while (Char1 != EOF || Char2 != EOF) {
+  while (Char1 != EOF || Char2 != EOF) { /* while there are still characters left from each file */
     if (Char1 != Char2){
-      printf("There is an error, the results aren't the same.");
+      printf("There is an error, the results aren't the same.\n");
+      bool = 0;
       break;
     }
+    else
+      bool = 1;
+    
     Char1 = fgetc(test_file1); /* get a character from the file */
     Char2 = fgetc(test_file2);
   }
 
-  printf("The results matched!\n");
-  
+  /* only print if the results matched for all characters */
+  if (bool == 1)
+    printf("The results matched!\n");
+
+  /* Close both files */
   fclose(test_file1);
   fclose(test_file2);
 }
