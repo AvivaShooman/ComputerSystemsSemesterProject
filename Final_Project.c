@@ -14,20 +14,20 @@ int main(void){
   /* Create one way pipeline in with popen() that reads in the input file */
   if ((pipe_read = popen("cat supermarket_sales.csv", "r")) == NULL){
     perror("popen");
-    exit(1);
+    /* exit(1); */
   }
 
   /* Create one way pipeline out with popen() */
   if ((pipe_transform = popen("grep -i 'Fashion accessories' | cut -d ',' -f 10| awk '{s+=$1} END {printf \"%0.2f\", s}'> output1.txt", "w")) == NULL){
     perror("popen");
-    exit(1);
+    /* exit(1); */
   }
 
   /* Processing loop gets a line of input file, transforms it and prints to stdout*/
   while(fgets(readbuf, 80, pipe_read)){
     if (fputs(readbuf, pipe_transform) == EOF){
       perror("fputs");
-      exit(1);
+      /*  exit(1); */
 	    
     }
   }
@@ -40,7 +40,7 @@ int main(void){
   /* Check that the pipe implemented above has the same output*/
   if ((pipe_test = system("cat supermarket_sales.csv | grep -i 'Fashion accessories' | cut -d ',' -f 10| awk '{s+=$1} END {printf \"%0.2f\", s}'> output2.txt")) != -1){
     perror("system");
-    exit(1);
+    /* exit(1); */
   }
 
    /* open input file for reading */
