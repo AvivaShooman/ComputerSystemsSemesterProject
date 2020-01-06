@@ -8,8 +8,7 @@ int main(void){
   char *filename1 = "./output1.txt";
   char *filename2 = "./output2.txt";
   char readbuf[80];
-  char *ans1, *ans2;
-  int pipe_test, number1, number2, Char1, Char2;
+  int Char1, Char2;
 
   /* Create one way pipeline in with popen() that reads in the input file */
   if ((pipe_read = popen("cat supermarket_sales.csv", "r")) == NULL){
